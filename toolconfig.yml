@@ -1,31 +1,56 @@
 tool_package_snumber: "geou-tsapp-0001"
-version: "V001"
-
-
-pull_stream_cfg: {
-  # "source": "uva",
-  # "url": "http://47.110.75.177:18002/manage/api/v1/dispatch/external/getDroneVideoStreamUrls?drone_sn=1581F8HGX254300A07AZ",
-  # "type": "rtmp",
-  "source": "local",
-  "url": "rtmp://localhost:9081/live/livestream",
-  "type": "rtmp",
-}
-
-models_cfg : [
-    {
-      "model_folder": "/home/develop/workcode/tool_dev/ds_ai_svr/ai-node-svr/code/src/tools/geou-tsapp-0001-CampusUVAVedioAnalyseServer/weight",
-      "model_name": "yolov8n.pt",
-      "type": "yolo",
-    },
-  ]
-
-
-push_stream_cfg: {
-  "mode": "ffmpeg",
-  "type": "rtmp",
-  "srs_addr": "localhost",
-  "srs_port": 9081,
-  "stream_key": "detected",
-  "url": "rtmp://localhost:9081/live/detected",  #url可不填
-
+tools_sync_cfgs: {
+    "videoProcess": {
+        "0.0.0": {
+            "tool_uniq_id": "video_process_unique_id_001",
+            "tool_desc": "视频处理服务：支持视频流拉取、AI 算法分析（YOLO 等）及结果推送。",
+            "tool_cfg": [
+                {
+                    "FunDesc": "视频处理任务管理，支持启动、停止、查询任务及获取结果。",
+                    "ReqParam": {
+                        "dtype": "videoProcess",
+                        "version": "0.0.0",
+                        "subfuncs": [
+                            {
+                                "func_name": "start_task",
+                                "func_desc": "启动视频处理任务",
+                                "params": {
+                                    "pull_source": "输入源类型，如 'local' 或 'uva'",
+                                    "pull_url": "视频流地址",
+                                    "models_cfg": "模型配置列表",
+                                    "output_type": "输出类型：'stream', 'json', 'mysql'"
+                                }
+                            },
+                            {
+                                "func_name": "get_result",
+                                "func_desc": "获取任务结果",
+                                "params": {
+                                    "task_id": "任务唯一标识符"
+                                }
+                            },
+                            {
+                                "func_name": "list_tasks",
+                                "func_desc": "列出所有任务",
+                                "params": {}
+                            },
+                            {
+                                "func_name": "stop_task",
+                                "func_desc": "停止视频处理任务",
+                                "params": {
+                                    "task_id": "任务唯一标识符"
+                                }
+                            },
+                            {
+                                "func_name": "get_stream_url",
+                                "func_desc": "获取输出流地址",
+                                "params": {
+                                    "task_id": "任务唯一标识符"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
 }
