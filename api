@@ -1,0 +1,27 @@
+curl --location --request POST '127.0.0.1:13212/start_task' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "tool_package_snumber": "geou-tsapp-0001",
+    "version": "V001",
+    "pull_stream_cfg": {
+        "source": "local",
+        "url": "rtmp://localhost:9081/live/livestream",
+        "type": "rtmp"
+    },
+    "models_cfg": [
+        {
+            "model_folder": "/home/develop/workcode/tool_dev/ds_ai_svr/ai-node-svr/code/src/tools/geou-tsapp-0001-CampusUVAVedioAnalyseServer/weight",
+            "model_name": "yolov8n.pt",
+            "type": "yolo",
+        }
+    ],
+    "push_stream_cfg": {
+        "mode": "ffmpeg",
+        "type": "rtmp",
+        "srs_addr": "localhost",
+        "srs_port": 9081,
+        "stream_key": "detected",
+        "url": "rtmp://localhost:9081/live/detected"
+    },
+    "output_type": "stream"
+}'

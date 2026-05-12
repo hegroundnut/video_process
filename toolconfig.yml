@@ -1,0 +1,31 @@
+tool_package_snumber: "geou-tsapp-0001"
+version: "V001"
+
+
+pull_stream_cfg: {
+  # "source": "uva",
+  # "url": "http://47.110.75.177:18002/manage/api/v1/dispatch/external/getDroneVideoStreamUrls?drone_sn=1581F8HGX254300A07AZ",
+  # "type": "rtmp",
+  "source": "local",
+  "url": "rtmp://localhost:9081/live/livestream",
+  "type": "rtmp",
+}
+
+models_cfg : [
+    {
+      "model_folder": "/home/develop/workcode/tool_dev/ds_ai_svr/ai-node-svr/code/src/tools/geou-tsapp-0001-CampusUVAVedioAnalyseServer/weight",
+      "model_name": "yolov8n.pt",
+      "type": "yolo",
+    },
+  ]
+
+
+push_stream_cfg: {
+  "mode": "ffmpeg",
+  "type": "rtmp",
+  "srs_addr": "localhost",
+  "srs_port": 9081,
+  "stream_key": "detected",
+  "url": "rtmp://localhost:9081/live/detected",  #url可不填
+
+}
